@@ -1,0 +1,156 @@
+@import "tailwindcss";
+
+@theme {
+  --font-typewriter: 'Special Elite', monospace;
+  --font-handwritten: 'Caveat', cursive;
+  --font-mono: 'Courier Prime', monospace;
+  --font-stamp: 'Bebas Neue', sans-serif;
+
+  --color-board: #2c1810;
+  --color-paper: #f4e4c1;
+  --color-paper-dark: #d4c4a1;
+  --color-red-string: #cc0000;
+  --color-red-stamp: #8b0000;
+  --color-ink: #2c2c2c;
+  --color-ink-blue: #1a3a5c;
+  --color-dark-bg: #0a0a0a;
+  --color-dark-surface: #111111;
+  --color-dark-border: #1a1a1a;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--color-dark-bg);
+  color: var(--color-paper);
+  font-family: var(--font-mono);
+  overflow-x: hidden;
+}
+
+/* Hide default cursor on desktop */
+@media (min-width: 768px) {
+  body {
+    cursor: none;
+  }
+  a, button, input, textarea, .hoverable {
+    cursor: none;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0a0a0a;
+}
+::-webkit-scrollbar-thumb {
+  background: #8b0000;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #cc0000;
+}
+
+/* Selection */
+::selection {
+  background: rgba(204, 0, 0, 0.3);
+  color: var(--color-paper);
+}
+
+/* Typewriter blink animation */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* Float animation */
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  33% { transform: translateY(-10px) rotate(1deg); }
+  66% { transform: translateY(-5px) rotate(-1deg); }
+}
+
+/* Dust particle rise */
+@keyframes dustRise {
+  0% {
+    transform: translateY(100vh) rotate(0deg);
+    opacity: 0;
+  }
+  10% { opacity: 0.4; }
+  90% { opacity: 0.2; }
+  100% {
+    transform: translateY(-10vh) rotate(720deg);
+    opacity: 0;
+  }
+}
+
+/* Stamp slam */
+@keyframes stampSlam {
+  0% {
+    transform: rotate(-15deg) scale(4);
+    opacity: 0;
+  }
+  60% {
+    transform: rotate(-15deg) scale(0.85);
+    opacity: 1;
+  }
+  80% {
+    transform: rotate(-15deg) scale(1.05);
+    opacity: 0.9;
+  }
+  100% {
+    transform: rotate(-15deg) scale(1);
+    opacity: 0.8;
+  }
+}
+
+/* Reveal animation */
+@keyframes revealUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+/* Glow pulse */
+@keyframes glowPulse {
+  0%, 100% { box-shadow: 0 0 15px rgba(204, 0, 0, 0.2); }
+  50% { box-shadow: 0 0 30px rgba(204, 0, 0, 0.4); }
+}
+
+/* Shimmer effect for buttons */
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* Scan line */
+@keyframes scanline {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100vh); }
+}
+
+/* Flicker */
+@keyframes flicker {
+  0%, 100% { opacity: 1; }
+  92% { opacity: 1; }
+  93% { opacity: 0.6; }
+  94% { opacity: 1; }
+  96% { opacity: 0.75; }
+  97% { opacity: 1; }
+}
