@@ -1,137 +1,443 @@
-import { useRef, useState } from 'react'
-import { useScrollReveal } from '../hooks/useScrollReveal'
-import SectionHeader from '../components/SectionHeader'
-import CaseFileModal from '../components/CaseFileModal'
-import { projects } from '../data/projects'
+import { motion } from 'framer-motion';
+import { useState } from 'react';
 
-const pinColors = ['bg-red-500', 'bg-yellow-500', 'bg-blue-500', 'bg-green-500', 'bg-red-600', 'bg-purple-500']
-const tilts = ['-rotate-2', 'rotate-1', '-rotate-1', 'rotate-2', 'rotate-0', '-rotate-2']
+const cases = [
+    {
+        id: 'SB-001',
+        title: 'MediScan AI — Brain Tumor Detection',
+        tags: ['HTML5', 'JavaScript', 'React', 'Google Gemini AI', 'Flask'],
+        desc: 'An AI-powered medical imaging tool that detects and classifies brain tumor patterns of MRI scans using Google Gemini Vision. Built for educational and research exploration.',
+        status: 'SOLVED',
+        statusColor: '#2b7a2b',
+        github: 'https://github.com/saptarshi-bisoi/Mediscan-AI',
+        live: 'https://mediscan-ai-tumor.vercel.app/',
+        rotation: -2,
+    },
+    {
+        id: 'SB-002',
+        title: 'Happy Holi Studio',
+        tags: ['React', 'Google Gemini AI', 'CSS3', 'Vite'],
+        desc: 'An interactive AI-powered studio that lets users dive into the colorful chaos of Holi. Generates custom messages, customizes color themes, and delivers dynamic festive animations.',
+        status: 'SOLVED',
+        statusColor: '#2b7a2b',
+        github: 'https://github.com/saptarshi-bisoi/Happy-Holi',
+        live: 'https://happy-holi-studio.vercel.app/studio',
+        rotation: 1,
+    },
+    {
+        id: 'SB-003',
+        title: 'Age Calculator Web App',
+        tags: ['JavaScript', 'HTML5', 'CSS3', 'DOM', 'Date API'],
+        desc: 'A precise, polished age calculator that breaks down your exact age in years, months, days, hours, and seconds. Handles leap years and edge cases with clean time mathematics.',
+        status: 'SOLVED',
+        statusColor: '#2b7a2b',
+        github: 'https://github.com/saptarshi-bisoi/Age--Calculator-',
+        live: 'https://age-calculator-z66d.vercel.app/',
+        rotation: -1,
+    },
+    {
+        id: 'SB-004',
+        title: 'Designer Portfolio Website',
+        tags: ['React', 'TypeScript', 'Next.js', 'Tailwind CSS', 'Framer Motion'],
+        desc: 'A modern, responsive portfolio website built with Next.js and TypeScript, featuring smooth animations, dark mode, and elegant motion design to showcase creative and development work.',
+        status: 'IN PROGRESS',
+        statusColor: '#b8860b',
+        github: 'https://github.com/saptarshi-bisoi/Designer-portfolio-website',
+        live: 'https://saptarshi-designer.vercel.app/',
+        rotation: 2,
+    },
+    {
+        id: 'SB-005',
+        title: 'Dice of Wisdom',
+        tags: ['HTML5', 'CSS3', 'JavaScript', 'REST API', 'DOM'],
+        desc: 'A fun, interactive dice game that rolls and delivers random wisdom quotes fetched live from the Advice Slip API. Features smooth dice animations, a clean responsive UI, and real-time API calls.',
+        status: 'SOLVED',
+        statusColor: '#2b7a2b',
+        github: 'https://github.com/saptarshi-bisoi/Dice-Of-Wisdom',
+        live: 'https://dice-of-wisdom.vercel.app/',
+        rotation: -2,
+    },
+    {
+        id: 'SB-006',
+        title: 'Custom Wedding Invitation Website',
+        tags: ['React', 'TypeScript', 'Interactive Animations', 'Service Workers', 'Performance Optimization'],
+        desc: 'A sophisticated custom wedding invitation website built with React and TypeScript, featuring interactive animations and responsive design. Implemented offline-first caching with service workers and automated image compression pipeline for optimal performance across all devices.',
+        status: 'SOLVED',
+        statusColor: '#2b7a2b',
+        github: 'https://github.com/saptarshi-bisoi/wedding_Template',
+        live: 'https://wedding-template-client.vercel.app/',
+        rotation: 1,
+    },
+];
+
+const fadeIn = (delay = 0) => ({
+    initial: { opacity: 0, y: 30 },
+    whileInView: { opacity: 1, y: 0 },
+    viewport: { once: true, margin: "-50px" },
+    transition: { delay, duration: 0.6, ease: "easeOut" },
+});
+
+const ArchiveButton = () => {
+    const [isHovered, setIsHovered] = useState(false);
+    const [isClicked, setIsClicked] = useState(false);
+
+    const handleClick = (e) => {
+        e.preventDefault();
+        setIsClicked(true);
+        setTimeout(() => {
+            window.open('https://github.com/parim2250', '_blank');
+            setIsClicked(false);
+        }, 900);
+    };
+
+    return (
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '6rem', marginBottom: '2rem' }}>
+            {/* Terminal Label */}
+            <div style={{
+                fontFamily: 'var(--font-mono)',
+                fontSize: '0.65rem',
+                color: 'rgba(232, 224, 208, 0.4)',
+                letterSpacing: '0.2em',
+                marginBottom: '1rem',
+                textTransform: 'uppercase',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px'
+            }}>
+                <span style={{ display: 'inline-block', width: '8px', height: '8px', background: 'rgba(200, 170, 100, 0.5)', borderRadius: '50%' }}></span>
+                ARCHIVE ACCESS TERMINAL
+            </div>
+            <motion.button
+                onClick={handleClick}
+                onHoverStart={() => setIsHovered(true)}
+                onHoverEnd={() => setIsHovered(false)}
+                whileHover={{ y: -4 }}
+                transition={{ duration: 0.3, ease: 'easeOut' }}
+                style={{
+                    position: 'relative',
+                    background: '#161210',
+                    border: '1px solid rgba(200, 170, 100, 0.2)',
+                    borderRadius: '6px',
+                    padding: '1.2rem 2.5rem',
+                    cursor: 'pointer',
+                    overflow: 'hidden',
+                    boxShadow: isHovered 
+                        ? '0 10px 30px rgba(200, 170, 100, 0.1), inset 0 2px 10px rgba(200, 170, 100, 0.05)'
+                        : '0 4px 15px rgba(0, 0, 0, 0.5), inset 0 2px 5px rgba(255, 255, 255, 0.02)',
+                    outline: 'none',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    minWidth: '340px',
+                }}
+            >
+                {/* Horizontal scan line on hover */}
+                {isHovered && !isClicked && (
+                    <motion.div
+                        initial={{ top: '-10%', opacity: 0 }}
+                        animate={{ top: '110%', opacity: [0, 0.5, 0] }}
+                        transition={{ duration: 1.5, repeat: Infinity, ease: 'linear' }}
+                        style={{
+                            position: 'absolute',
+                            left: 0,
+                            right: 0,
+                            height: '2px',
+                            background: 'linear-gradient(90deg, transparent, rgba(200, 170, 100, 0.6), transparent)',
+                            boxShadow: '0 0 8px rgba(200, 170, 100, 0.5)',
+                            zIndex: 1,
+                            pointerEvents: 'none',
+                        }}
+                    />
+                )}
+
+                <div style={{ 
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    gap: '16px', 
+                    position: 'relative', 
+                    zIndex: 2,
+                    opacity: isClicked ? 0 : 1,
+                    transition: 'opacity 0.2s'
+                }}>
+                    {/* Lock Icon */}
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(200, 170, 100, 0.9)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                    </svg>
+                    
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+                        <span style={{ 
+                            fontFamily: 'var(--font-mono)', 
+                            fontSize: '1rem', 
+                            color: 'rgba(232, 224, 208, 0.9)', 
+                            letterSpacing: '0.1em',
+                            fontWeight: 'bold'
+                        }}>
+                            ACCESS HIDDEN INVESTIGATION ARCHIVE →
+                        </span>
+                        <span style={{ 
+                            fontFamily: 'var(--font-mono)', 
+                            fontSize: '0.7rem', 
+                            color: 'rgba(200, 170, 100, 0.6)', 
+                            letterSpacing: '0.05em',
+                            marginTop: '4px',
+                            textTransform: 'uppercase'
+                        }}>
+                            Access extended case archive
+                        </span>
+                    </div>
+                </div>
+
+                {/* Click Interaction Feedback */}
+                {isClicked && (
+                    <motion.div 
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        style={{ 
+                            position: 'absolute', 
+                            inset: 0, 
+                            display: 'flex', 
+                            flexDirection: 'column',
+                            justifyContent: 'center', 
+                            alignItems: 'center',
+                            background: 'rgba(22, 18, 16, 0.95)',
+                            zIndex: 3
+                        }}
+                    >
+                        <motion.span 
+                            animate={{ opacity: [0.5, 1, 0.5] }}
+                            transition={{ duration: 0.8, repeat: Infinity }}
+                            style={{ 
+                                fontFamily: 'var(--font-mono)', 
+                                color: 'rgba(200, 170, 100, 0.9)', 
+                                fontSize: '0.85rem',
+                                letterSpacing: '0.15em',
+                                fontWeight: 'bold'
+                            }}
+                        >
+                            ACCESSING ARCHIVE...
+                        </motion.span>
+                        <span style={{ 
+                            fontFamily: 'var(--font-mono)', 
+                            color: 'rgba(232, 224, 208, 0.5)', 
+                            fontSize: '0.65rem',
+                            letterSpacing: '0.1em',
+                            marginTop: '8px'
+                        }}>
+                            REDIRECTING TO GITHUB
+                        </span>
+                    </motion.div>
+                )}
+            </motion.button>
+        </div>
+    );
+};
 
 export default function InvestigationBoard() {
-  const ref = useRef(null)
-  const visible = useScrollReveal(ref, 0.08)
-  const [selected, setSelected] = useState(null)
+    const [particles] = useState(() => Array.from({ length: 15 }).map((_, i) => ({
+        id: i,
+        x: Math.random() * 100,
+        y: Math.random() * 100,
+        size: Math.random() * 2 + 1,
+        duration: Math.random() * 20 + 20,
+        delay: Math.random() * 5
+    })));
 
-  return (
-    <section id="cases" ref={ref} className="relative py-28 sm:py-36 px-4 sm:px-6">
-      <div className="max-w-7xl mx-auto">
-        <SectionHeader
-          label="SECTION 02"
-          title="INVESTIGATION BOARD"
-          subtitle="Click any case file to examine the evidence"
-          visible={visible}
-        />
+    return (
+        <section id="projects" style={{
+            position: 'relative',
+            backgroundColor: '#161210',
+            padding: '8rem 1.5rem',
+            overflow: 'hidden'
+        }}>
+            {/* Ambient Background */}
+            <div style={{
+                position: 'absolute',
+                inset: 0,
+                background: 'radial-gradient(circle at 50% 0%, rgba(138, 90, 68, 0.15) 0%, rgba(20, 15, 12, 0.95) 100%)',
+                pointerEvents: 'none'
+            }} />
 
-        {/* The Cork Board */}
-        <div className={`mt-14 transition-all duration-1000 delay-500 ${
-          visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-        }`}>
-          <div className="cork-bg rounded-lg p-6 sm:p-10 relative border-[6px] sm:border-8 border-amber-900/50 shadow-2xl shadow-black/40 overflow-hidden">
-            {/* Inner shadow */}
-            <div className="absolute inset-0 rounded shadow-[inset_0_0_60px_rgba(0,0,0,0.35)] pointer-events-none z-[8]" />
+            {/* Dust Particles */}
+            <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none' }}>
+                {particles.map(p => (
+                    <motion.div
+                        key={p.id}
+                        initial={{ opacity: 0, x: `${p.x}vw`, y: `${p.y}vh` }}
+                        animate={{ opacity: [0, 0.4, 0], y: [`${p.y}vh`, `${p.y - 10}vh`] }}
+                        transition={{ duration: p.duration, repeat: Infinity, delay: p.delay, ease: "linear" }}
+                        style={{
+                            position: 'absolute',
+                            width: `${p.size}px`,
+                            height: `${p.size}px`,
+                            backgroundColor: 'rgba(232, 224, 208, 0.3)',
+                            borderRadius: '50%',
+                            filter: 'blur(1px)'
+                        }}
+                    />
+                ))}
+            </div>
 
-            {/* SVG Red Strings */}
-            <svg className="absolute inset-0 w-full h-full pointer-events-none z-[5]" preserveAspectRatio="none">
-              {/* Horizontal connections */}
-              <line x1="20%" y1="30%" x2="50%" y2="28%" stroke="#cc0000" strokeWidth="1.2" opacity={visible ? "0.4" : "0"}
-                style={{ transition: 'opacity 2s ease 1s' }} />
-              <line x1="50%" y1="28%" x2="80%" y2="32%" stroke="#cc0000" strokeWidth="1.2" opacity={visible ? "0.4" : "0"}
-                style={{ transition: 'opacity 2s ease 1.3s' }} />
-              {/* Vertical connections */}
-              <line x1="20%" y1="30%" x2="35%" y2="72%" stroke="#cc0000" strokeWidth="1.2" opacity={visible ? "0.35" : "0"}
-                style={{ transition: 'opacity 2s ease 1.5s' }} />
-              <line x1="50%" y1="28%" x2="65%" y2="72%" stroke="#cc0000" strokeWidth="1.2" opacity={visible ? "0.35" : "0"}
-                style={{ transition: 'opacity 2s ease 1.8s' }} />
-              <line x1="80%" y1="32%" x2="80%" y2="72%" stroke="#cc0000" strokeWidth="1.2" opacity={visible ? "0.35" : "0"}
-                style={{ transition: 'opacity 2s ease 2s' }} />
-            </svg>
+            <div style={{ maxWidth: '1100px', margin: '0 auto', position: 'relative', zIndex: 10 }}>
+                {/* Header Section */}
+                <motion.div {...fadeIn()} style={{ textAlign: 'center', marginBottom: '5rem', position: 'relative' }}>
+                    <p style={{ fontFamily: 'var(--font-mono)', fontSize: '0.8rem', letterSpacing: '0.2em', color: 'rgba(232,224,208,0.5)', textTransform: 'uppercase', marginBottom: '1rem' }}>
+                        // Department of Archives
+                    </p>
+                    <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(2.5rem, 5vw, 4rem)', color: '#e8dcc4', margin: 0, fontWeight: 900 }}>
+                        CASE <span style={{ color: 'var(--color-gold)' }}>FILES</span>
+                    </h2>
+                    <p style={{ fontFamily: 'var(--font-mono)', fontSize: '1rem', color: 'rgba(232,224,208,0.7)', marginTop: '1rem', fontStyle: 'italic' }}>
+                        "Every project is a mystery investigated and solved."
+                    </p>
 
-            {/* Project Cards */}
-            <div className="relative z-[6] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-              {projects.map((project, i) => (
-                <div
-                  key={project.id}
-                  onClick={() => setSelected(project)}
-                  className={`hoverable relative cursor-pointer group transition-all duration-500 ${tilts[i % tilts.length]} hover:rotate-0 hover:scale-105 hover:z-20`}
-                  style={{
-                    opacity: visible ? 1 : 0,
-                    transform: visible ? undefined : 'translateY(25px)',
-                    transition: `opacity 0.6s ease ${i * 150}ms, transform 0.6s ease ${i * 150}ms`,
-                  }}
-                >
-                  {/* Push pin */}
-                  <div className={`push-pin ${pinColors[i % pinColors.length]}`} />
+                    {/* Red SVG connecting line from header to grid */}
+                    <div style={{ position: 'absolute', left: '50%', top: '100%', bottom: '-5rem', width: '2px', background: 'linear-gradient(to bottom, rgba(180,40,40,0.8), transparent)', transform: 'translateX(-50%)' }} />
+                </motion.div>
 
-                  {/* Card */}
-                  <div className="bg-white shadow-lg group-hover:shadow-2xl transition-shadow overflow-hidden">
-                    {/* Image area */}
-                    <div className="h-36 sm:h-40 bg-gradient-to-br from-gray-200 via-gray-300 to-gray-400 relative overflow-hidden">
-                      <div className="absolute inset-0 flex items-center justify-center text-4xl sm:text-5xl opacity-40">
-                        {project.icon}
-                      </div>
-                      {/* Hover overlay */}
-                      <div className="absolute inset-0 bg-[#8b0000]/70 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        <span className="text-white font-typewriter text-xs tracking-[0.2em]">
-                          🔍 EXAMINE EVIDENCE
-                        </span>
-                      </div>
-                    </div>
+                {/* Grid of Case Files */}
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 340px), 1fr))', gap: '3rem 2rem' }}>
+                    {cases.map((c, i) => (
+                        <motion.div
+                            key={c.id}
+                            {...fadeIn(i * 0.15)}
+                            whileHover={{
+                                scale: 1.02,
+                                rotate: 0,
+                                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.8), 10px 10px 30px rgba(0,0,0,0.5)'
+                            }}
+                            style={{
+                                backgroundColor: '#e8dcc4',
+                                backgroundImage: 'radial-gradient(rgba(0,0,0,0.05) 1px, transparent 1px)',
+                                backgroundSize: '15px 15px',
+                                padding: '2.5rem 2rem 2rem',
+                                borderRadius: '2px',
+                                boxShadow: '0 10px 30px rgba(0,0,0,0.4)',
+                                position: 'relative',
+                                transform: `rotate(${c.rotation}deg)`,
+                                color: '#2a201c',
+                                transition: 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)'
+                            }}
+                            className="case-file-card"
+                        >
+                            {/* Red Thumbtack */}
+                            <div style={{
+                                position: 'absolute',
+                                top: '12px',
+                                left: '50%',
+                                transform: 'translateX(-50%)',
+                                width: '10px',
+                                height: '10px',
+                                backgroundColor: '#a00',
+                                borderRadius: '50%',
+                                boxShadow: '0 3px 5px rgba(0,0,0,0.5), inset -1px -1px 3px rgba(0,0,0,0.3), inset 1px 1px 3px rgba(255,100,100,0.5)',
+                            }} />
 
-                    {/* Info area */}
-                    <div className="p-4 bg-[#faf4e8]">
-                      <div className="flex justify-between items-start mb-2">
-                        <span className="font-mono text-[9px] text-gray-400 tracking-wider">
-                          CASE #{project.caseNumber}
-                        </span>
-                        <span className={`text-[9px] font-mono px-2 py-0.5 rounded-sm font-bold ${
-                          project.status === 'SOLVED'
-                            ? 'bg-green-100 text-green-700'
-                            : 'bg-amber-100 text-amber-700'
-                        }`}>
-                          {project.status}
-                        </span>
-                      </div>
-                      <h3 className="font-typewriter text-gray-800 text-sm font-bold leading-snug">
-                        {project.title}
-                      </h3>
-                      <p className="font-mono text-[10px] text-gray-500 mt-2 line-clamp-2 leading-relaxed">
-                        {project.shortDesc}
-                      </p>
-                      <div className="flex flex-wrap gap-1 mt-3">
-                        {project.tech.slice(0, 3).map(t => (
-                          <span key={t} className="text-[8px] font-mono bg-gray-200 text-gray-500 px-1.5 py-0.5 rounded-sm">
-                            {t}
-                          </span>
-                        ))}
-                        {project.tech.length > 3 && (
-                          <span className="text-[8px] font-mono text-gray-400">
-                            +{project.tech.length - 3}
-                          </span>
-                        )}
-                      </div>
-                    </div>
-                  </div>
+                            {/* Header: ID and Status */}
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', borderBottom: '2px solid rgba(0,0,0,0.8)', paddingBottom: '0.8rem', marginBottom: '1.5rem' }}>
+                                <div>
+                                    <label style={{ display: 'block', fontFamily: 'var(--font-mono)', fontSize: '0.6rem', fontWeight: 'bold', color: '#5a4a42' }}>CASE ID</label>
+                                    <span style={{ fontFamily: 'var(--font-mono)', fontSize: '1.1rem', fontWeight: 'bold', letterSpacing: '1px' }}>{c.id}</span>
+                                </div>
+                                <div style={{
+                                    border: `3px solid ${c.statusColor}`,
+                                    padding: '4px 10px',
+                                    color: c.statusColor,
+                                    fontFamily: 'var(--font-mono)',
+                                    fontWeight: 'bold',
+                                    fontSize: '0.8rem',
+                                    letterSpacing: '2px',
+                                    transform: 'rotate(5deg)',
+                                    mixBlendMode: 'multiply',
+                                    opacity: 0.85
+                                }}>
+                                    {c.status}
+                                </div>
+                            </div>
 
-                  {/* Tape on top */}
-                  <div className="tape-strip top-[-4px] left-1/2 -translate-x-1/2 rotate-[-3deg]" />
+                            {/* Title */}
+                            <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.4rem', fontWeight: 900, marginBottom: '1rem', lineHeight: 1.2 }}>
+                                {c.title}
+                            </h3>
+
+                            {/* Description */}
+                            <p style={{ fontFamily: 'var(--font-mono)', fontSize: '0.9rem', lineHeight: 1.6, marginBottom: '2rem', backgroundColor: 'rgba(0,0,0,0.03)', padding: '1rem', borderLeft: '3px solid #654321' }}>
+                                {c.desc}
+                            </p>
+
+                            {/* Evidence Tags */}
+                            <div style={{ marginBottom: '2rem' }}>
+                                <label style={{ display: 'block', fontFamily: 'var(--font-mono)', fontSize: '0.6rem', fontWeight: 'bold', color: '#5a4a42', marginBottom: '0.5rem' }}>EVIDENCE LOG (TECH)</label>
+                                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+                                    {c.tags.map(t => (
+                                        <span key={t} style={{
+                                            fontFamily: 'var(--font-mono)',
+                                            fontSize: '0.7rem',
+                                            color: '#111',
+                                            background: '#d4c5ab',
+                                            padding: '4px 8px',
+                                            border: '1px solid rgba(0,0,0,0.2)',
+                                            boxShadow: '1px 1px 0 rgba(0,0,0,0.1)'
+                                        }}>
+                                            {t}
+                                        </span>
+                                    ))}
+                                </div>
+                            </div>
+
+                            {/* Action Buttons */}
+                            <div style={{ display: 'flex', gap: '10px', marginTop: 'auto', borderTop: '1px dashed rgba(0,0,0,0.2)', paddingTop: '1.5rem' }}>
+                                <a href={c.live} target="_blank" rel="noopener noreferrer"
+                                    style={{ flex: 1, textAlign: 'center', fontFamily: 'var(--font-mono)', fontSize: '0.75rem', fontWeight: 'bold', letterSpacing: '0.1em', color: '#e8dcc4', background: '#2a201c', padding: '10px', textDecoration: 'none', transition: 'background 0.2s' }}
+                                    onMouseEnter={e => e.target.style.background = '#4a3a30'}
+                                    onMouseLeave={e => e.target.style.background = '#2a201c'}
+                                >
+                                    OPEN CASE FILE
+                                </a>
+                                <a href={c.github} target="_blank" rel="noopener noreferrer"
+                                    style={{ flex: 1, textAlign: 'center', fontFamily: 'var(--font-mono)', fontSize: '0.75rem', fontWeight: 'bold', letterSpacing: '0.1em', color: '#2a201c', background: 'transparent', border: '2px solid #2a201c', padding: '8px', textDecoration: 'none', transition: 'all 0.2s' }}
+                                    onMouseEnter={e => { e.target.style.background = '#2a201c'; e.target.style.color = '#e8dcc4'; }}
+                                    onMouseLeave={e => { e.target.style.background = 'transparent'; e.target.style.color = '#2a201c'; }}
+                                >
+                                    VIEW SOURCE
+                                </a>
+                            </div>
+
+                            {/* Hover Reveal Stamp */}
+                            <div className="hover-stamp" style={{
+                                position: 'absolute',
+                                bottom: '40%',
+                                right: '10%',
+                                border: '3px solid rgba(180,40,40,0.4)',
+                                color: 'rgba(180,40,40,0.4)',
+                                fontFamily: 'var(--font-mono)',
+                                fontSize: '1.5rem',
+                                fontWeight: 'bold',
+                                padding: '5px 10px',
+                                transform: 'rotate(-15deg)',
+                                pointerEvents: 'none',
+                                opacity: 0,
+                                transition: 'opacity 0.3s'
+                            }}>
+                                REVIEWED
+                            </div>
+                        </motion.div>
+                    ))}
                 </div>
-              ))}
+
+                {/* Cinematic Archive Button */}
+                <ArchiveButton />
             </div>
 
-            {/* Board decorations */}
-            <div className="absolute bottom-4 left-6 font-handwritten text-amber-900/30 text-sm rotate-[-4deg] pointer-events-none z-[7]">
-              "Check connections between projects..."
-            </div>
-            <div className="absolute top-4 right-6 font-handwritten text-amber-900/20 text-xs rotate-[3deg] pointer-events-none z-[7]">
-              UPDATED: {new Date().toLocaleDateString()}
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {selected && (
-        <CaseFileModal project={selected} onClose={() => setSelected(null)} />
-      )}
-    </section>
-  )
+            {/* Injected CSS for hover effects and mobile padding */}
+            <style>{`
+                .case-file-card:hover .hover-stamp {
+                    opacity: 1 !important;
+                }
+                @media (max-width: 640px) {
+                    .case-file-card { padding: 1.5rem 1rem 1rem !important; }
+                }
+            `}</style>
+        </section>
+    );
 }
