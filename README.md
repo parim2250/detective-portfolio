@@ -107,8 +107,6 @@ portfolio/
 ├── index.html
 ├── package.json
 └── vite.config.js
-
-
 🚀 Quick Start
 Bash
 
