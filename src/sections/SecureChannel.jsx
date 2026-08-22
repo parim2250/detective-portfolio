@@ -1,117 +1,194 @@
-import { useRef, useState } from 'react'
-import { useScrollReveal } from '../hooks/useScrollReveal'
-import SectionHeader from '../components/SectionHeader'
-import { FiGithub, FiLinkedin, FiTwitter, FiMail, FiArrowRight } from 'react-icons/fi'
+import { motion } from 'framer-motion';
+import { useState } from 'react';
+
+const fadeIn = (d = 0) => ({ 
+    initial: { opacity: 0, y: 25 }, 
+    whileInView: { opacity: 1, y: 0 }, 
+    viewport: { once: true }, 
+    transition: { delay: d, duration: 0.5 } 
+});
+
+const iS = { 
+    width: '100%', 
+    background: 'rgba(255, 255, 255, 0.04)', 
+    border: '1px solid rgba(200, 170, 100, 0.25)', 
+    color: '#e8dcc4', 
+    fontFamily: 'var(--font-mono, monospace)', 
+    fontSize: '0.875rem', 
+    padding: '12px 14px', 
+    borderRadius: '4px', 
+    outline: 'none',
+    boxSizing: 'border-box'
+};
+
+const lS = { 
+    display: 'block', 
+    fontFamily: 'var(--font-mono, monospace)', 
+    fontSize: '0.65rem', 
+    letterSpacing: '0.12em', 
+    textTransform: 'uppercase', 
+    color: '#c8a44d', 
+    marginBottom: '6px' 
+};
+
+const contacts = [
+    { icon: 'fa-solid fa-envelope', label: 'Email', value: 'parim2250@gmail.com', href: 'mailto:parim2250@gmail.com' },
+    { icon: 'fa-brands fa-github', label: 'GitHub', value: 'parim2250', href: 'https://github.com/parim2250' },
+    { icon: 'fa-brands fa-linkedin', label: 'LinkedIn', value: 'pari-mittal', href: 'https://www.linkedin.com/in/pari-mittal-b56895318' },
+    { icon: 'fa-solid fa-at', label: 'Threads', value: '@parimittal504', href: 'https://www.threads.net/@parimittal504' },
+    { icon: 'fa-brands fa-instagram', label: 'Instagram', value: '@parimittal504', href: 'https://www.instagram.com/parimittal504/' },
+];
 
 export default function SecureChannel() {
-  const ref = useRef(null)
-  const visible = useScrollReveal(ref, 0.15)
-  const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' })
-  const [sending, setSending] = useState(false)
-  const [sent, setSent] = useState(false)
+    const [done, setDone] = useState(false);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-    setSending(true)
-    // ✏️ CONNECT YOUR EMAIL SERVICE HERE LATER
-    await new Promise(r => setTimeout(r, 2000))
-    setSending(false)
-    setSent(true)
-    setForm({ name: '', email: '', subject: '', message: '' })
-    setTimeout(() => setSent(false), 5000)
-  }
+    const submit = (e) => { 
+        e.preventDefault(); 
+        setDone(true); 
+        setTimeout(() => setDone(false), 4000); 
+    };
 
-  const links = [
-    { icon: FiGithub, label: 'Evidence Archive', sub: 'GitHub', url: '#' },
-    { icon: FiLinkedin, label: 'Agent Network', sub: 'LinkedIn', url: '#' },
-    { icon: FiTwitter, label: 'Public Broadcast', sub: 'Twitter / X', url: '#' },
-    { icon: FiMail, label: 'Direct Line', sub: 'Email', url: '#' },
-  ]
+    return (
+        <section id="contact" style={{ padding: '6rem 1.5rem', backgroundColor: '#100c0a', color: '#e8dcc4' }}>
+            <div style={{ maxWidth: '900px', margin: '0 auto' }}>
+                {/* Header */}
+                <motion.div {...fadeIn()} style={{ textAlign: 'center', marginBottom: '3rem' }}>
+                    <span style={{ fontFamily: 'var(--font-mono, monospace)', fontSize: '0.75rem', letterSpacing: '0.2em', color: 'rgba(232, 224, 208, 0.5)', textTransform: 'uppercase', display: 'block', marginBottom: '0.5rem' }}>
+                        // Confidential Dispatch
+                    </span>
+                    <h2 style={{ fontFamily: 'var(--font-heading, serif)', fontSize: 'clamp(2rem, 4vw, 3rem)', color: '#e8dcc4', margin: '0 0 1rem 0' }}>
+                        Submit a <span style={{ color: '#c8a44d' }}>Report</span>
+                    </h2>
+                    <p style={{ fontFamily: 'var(--font-mono, monospace)', fontSize: '0.9rem', color: 'rgba(232, 224, 208, 0.7)', maxWidth: '600px', margin: '0 auto' }}>
+                        Have a project idea or technical challenge? File a confidential investigation request.
+                    </p>
+                </motion.div>
 
-  return (
-    <section id="contact" ref={ref} className="relative py-28 sm:py-36 px-4 sm:px-6">
-      <div className="max-w-5xl mx-auto">
-        <SectionHeader
-          label="SECTION 06"
-          title="SECURE CHANNEL"
-          subtitle="Establish encrypted communication with the subject"
-          visible={visible}
-        />
+                <div style={{ maxWidth: '780px', margin: '0 auto' }}>
+                    {/* Contacts Grid */}
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '16px', marginBottom: '2.5rem' }}>
+                        {contacts.map((c, i) => (
+                            <motion.a 
+                                key={c.label} 
+                                {...fadeIn(i * 0.08)} 
+                                href={c.href} 
+                                target="_blank" 
+                                rel="noopener noreferrer"
+                                whileHover={{ y: -4 }}
+                                style={{
+                                    padding: '1.25rem 0.8rem',
+                                    textAlign: 'center',
+                                    textDecoration: 'none',
+                                    background: '#181310',
+                                    border: '1px solid rgba(200, 170, 100, 0.2)',
+                                    borderRadius: '4px',
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    boxShadow: '0 4px 15px rgba(0,0,0,0.5)',
+                                    transition: 'border-color 0.2s'
+                                }}
+                            >
+                                <div style={{ width: '42px', height: '42px', borderRadius: '50%', background: 'rgba(200, 170, 100, 0.08)', border: '1px solid rgba(200, 170, 100, 0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '0.75rem' }}>
+                                    <i className={c.icon} style={{ color: '#c8a44d', fontSize: '1rem' }} />
+                                </div>
+                                <div style={{ fontFamily: 'var(--font-mono, monospace)', fontSize: '0.65rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: '#c8a44d', marginBottom: '4px' }}>
+                                    {c.label}
+                                </div>
+                                <div style={{ color: '#e8dcc4', fontSize: '0.75rem', fontFamily: 'var(--font-mono, monospace)', wordBreak: 'break-all' }}>
+                                    {c.value}
+                                </div>
+                            </motion.a>
+                        ))}
+                    </div>
 
-        <div className={`mt-14 grid lg:grid-cols-[1fr_320px] gap-8 lg:gap-12 transition-all duration-1000 delay-300 ${
-          visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-        }`}>
-          <div className="bg-white/[0.03] border border-white/[0.06] rounded-sm p-6 sm:p-8 relative overflow-hidden">
-            <div className="absolute top-0 left-0 w-6 h-6 border-t-2 border-l-2 border-red-900/20" />
-            <div className="absolute bottom-0 right-0 w-6 h-6 border-b-2 border-r-2 border-red-900/20" />
+                    {/* Report Form */}
+                    <motion.form 
+                        {...fadeIn(0.15)} 
+                        onSubmit={submit} 
+                        style={{ 
+                            background: '#181310', 
+                            border: '1px solid rgba(200, 170, 100, 0.25)', 
+                            padding: '2.5rem 2rem', 
+                            borderRadius: '4px', 
+                            position: 'relative',
+                            boxShadow: '0 10px 30px rgba(0,0,0,0.6)'
+                        }}
+                    >
+                        <div style={{ 
+                            position: 'absolute', 
+                            top: '-14px', 
+                            left: '50%', 
+                            transform: 'translateX(-50%)',
+                            background: '#100c0a',
+                            border: '1px solid #c8a44d',
+                            padding: '2px 14px',
+                            borderRadius: '2px'
+                        }}>
+                            <span style={{ fontFamily: 'var(--font-mono, monospace)', fontSize: '0.65rem', color: '#c8a44d', letterSpacing: '0.15em', textTransform: 'uppercase', fontWeight: 'bold' }}>
+                                Confidential Report
+                            </span>
+                        </div>
 
-            <div className="flex items-center gap-2 mb-6">
-              <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-              <span className="font-mono text-[10px] text-gray-500 tracking-[0.2em]">
-                ENCRYPTED CHANNEL — ACTIVE
-              </span>
+                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '20px', marginBottom: '20px' }}>
+                            <div>
+                                <label style={lS}>Investigator Name</label>
+                                <input type="text" required placeholder="Your name" style={iS} />
+                            </div>
+                            <div>
+                                <label style={lS}>Comm Channel</label>
+                                <input type="email" required placeholder="your@email.com" style={iS} />
+                            </div>
+                        </div>
+
+                        <div style={{ marginBottom: '20px' }}>
+                            <label style={lS}>Case Subject</label>
+                            <input type="text" required placeholder="Brief description" style={iS} />
+                        </div>
+
+                        <div style={{ marginBottom: '2rem' }}>
+                            <label style={lS}>Case Details</label>
+                            <textarea required rows={5} placeholder="Describe the mystery..." style={{ ...iS, resize: 'vertical' }} />
+                        </div>
+
+                        <div style={{ textAlign: 'center' }}>
+                            <motion.button 
+                                type="submit" 
+                                whileHover={{ y: -2 }} 
+                                whileTap={{ scale: 0.97 }}
+                                style={{
+                                    background: '#c8a44d',
+                                    color: '#100c0a',
+                                    fontFamily: 'var(--font-mono, monospace)',
+                                    fontWeight: 'bold',
+                                    fontSize: '0.85rem',
+                                    letterSpacing: '0.1em',
+                                    padding: '12px 28px',
+                                    border: 'none',
+                                    borderRadius: '4px',
+                                    cursor: 'pointer',
+                                    display: 'inline-flex',
+                                    alignItems: 'center',
+                                    gap: '10px'
+                                }}
+                            >
+                                <i className="fa-solid fa-paper-plane" /> Submit Report
+                            </motion.button>
+                        </div>
+
+                        {done && (
+                            <motion.p 
+                                initial={{ opacity: 0 }} 
+                                animate={{ opacity: 1 }} 
+                                style={{ fontFamily: 'var(--font-mono, monospace)', color: '#c8a44d', fontSize: '0.85rem', marginTop: '1.5rem', textAlign: 'center' }}
+                            >
+                                ✓ Confidential report filed successfully.
+                            </motion.p>
+                        )}
+                    </motion.form>
+                </div>
             </div>
-
-            <form onSubmit={handleSubmit} className="space-y-5">
-              <div>
-                <label className="font-mono text-[9px] text-gray-500 tracking-[0.3em] block mb-2">AGENT NAME *</label>
-                <input
-                  type="text"
-                  required
-                  value={form.name}
-                  onChange={e => setForm({ ...form, name: e.target.value })}
-                  placeholder="Enter your codename..."
-                  className="w-full bg-black/30 border border-white/[0.08] rounded-sm px-4 py-3 font-mono text-sm text-[#f4e4c1] focus:border-red-900/40 focus:outline-none focus:shadow-[0_0_15px_rgba(139,0,0,0.08)] transition-all"
-                />
-              </div>
-              <div>
-                <label className="font-mono text-[9px] text-gray-500 tracking-[0.3em] block mb-2">SECURE EMAIL *</label>
-                <input
-                  type="email"
-                  required
-                  value={form.email}
-                  onChange={e => setForm({ ...form, email: e.target.value })}
-                  placeholder="agent@classified.com"
-                  className="w-full bg-black/30 border border-white/[0.08] rounded-sm px-4 py-3 font-mono text-sm text-[#f4e4c1] focus:border-red-900/40 focus:outline-none focus:shadow-[0_0_15px_rgba(139,0,0,0.08)] transition-all"
-                />
-              </div>
-              <div>
-                <label className="font-mono text-[9px] text-gray-500 tracking-[0.3em] block mb-2">ENCRYPTED MESSAGE *</label>
-                <textarea
-                  required
-                  rows={5}
-                  value={form.message}
-                  onChange={e => setForm({ ...form, message: e.target.value })}
-                  placeholder="Message..."
-                  className="w-full bg-black/30 border border-white/[0.08] rounded-sm px-4 py-3 font-mono text-sm text-[#f4e4c1] focus:border-red-900/40 focus:outline-none focus:shadow-[0_0_15px_rgba(139,0,0,0.08)] transition-all resize-none"
-                />
-              </div>
-
-              <button
-                type="submit"
-                disabled={sending}
-                className="hoverable w-full py-3.5 bg-[#8b0000] text-[#f4e4c1] font-typewriter tracking-[0.15em] rounded-sm hover:bg-[#6b0000] transition-all duration-300 relative overflow-hidden group"
-              >
-                {sending ? 'TRANSMITTING...' : sent ? '✅ TRANSMITTED' : '📨 TRANSMIT MESSAGE'}
-              </button>
-            </form>
-          </div>
-
-          <div className="space-y-4">
-            <div className="bg-white/[0.03] border border-white/[0.06] rounded-sm p-5">
-              <h3 className="font-typewriter text-sm text-[#f4e4c1] mb-4 tracking-wider">OTHER CHANNELS</h3>
-              <div className="space-y-2.5">
-                {links.map(link => (
-                  <a key={link.label} href={link.url} className="hoverable flex items-center gap-3 p-3 bg-white/[0.02] border border-white/[0.04] rounded-sm hover:border-red-900/15 transition-all group">
-                    <link.icon className="text-gray-500 group-hover:text-red-400 transition-colors" size={18} />
-                    <div className="font-mono text-[11px] text-[#f4e4c1]">{link.label}</div>
-                  </a>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  )
+        </section>
+    );
 }
