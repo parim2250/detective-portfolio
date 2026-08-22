@@ -107,3 +107,89 @@ portfolio/
 ├── index.html
 ├── package.json
 └── vite.config.js
+
+
+🚀 Quick Start
+Bash
+
+# Clone
+git clone https://github.com/parim2250/portfolio.git
+cd portfolio
+
+# Install
+npm install
+
+# Dev server
+npm run dev
+
+# LAN / mobile testing
+npm run dev -- --host
+Dev server defaults to http://localhost:5173
+
+🏗️ Build & Deploy
+Bash
+
+npm run build
+npm run preview
+Output: dist/
+
+Vercel settings
+Setting	Value
+Framework Preset	Vite
+Build Command	npm run build
+Output Directory	dist
+Install Command	npm install
+🎨 Design System
+Tokens live in src/index.css (@theme + :root):
+
+CSS
+
+--color-bg: #0a0c10;           /* Deep charcoal navy */
+--color-bg-light: #12151c;
+--color-bg-card: #161a22;
+--color-gold: #c8a44d;         /* Aged gold accent */
+--color-red: #b23a3a;          /* Evidence red */
+--color-parchment: #f5f1e8;    /* Case file parchment */
+--font-heading: 'Playfair Display';
+--font-mono: 'Special Elite';
+--font-body: 'Inter';
+🧭 Section IDs (Navigation Map)
+Nav Label	Anchor	Component
+—	#home	Landing
+Dossier	#about	SuspectProfile
+Case Files	#projects	InvestigationBoard
+Toolkit	#skills	EvidenceLocker
+Missions	#experience	InvestigationLog
+Training	#education	TrainingRecords
+Field	#missions	InformantReports
+Dispatch	#contact	SecureChannel
+🔧 Customize Your Case
+Update this	Edit here
+Projects	InvestigationBoard.jsx / data/projects.js
+Skills	EvidenceLocker.jsx / data/skills.js
+Experience	InvestigationLog.jsx / data/timeline.js
+Education	TrainingRecords.jsx
+Events / field work	InformantReports.jsx / data/fieldMissions.js
+Contact + socials	SecureChannel.jsx, Footer.jsx
+Hero copy	Landing.jsx
+Theme	index.css
+Resume	public/resume.pdf
+Logo / favicon	public/logo-main.png
+📡 Secure Channels
+Channel	Link
+Email	parim2250@gmail.com
+GitHub	github.com/parim2250
+LinkedIn	pari-mittal
+Instagram	@parimittal504
+Threads	@parimittal504
+📸 Preview
+(Optional — add a screenshot after deploy)
+
+Markdown
+
+![Portfolio preview](./public/preview.png)
+📜 License
+Personal portfolio — all rights reserved.
+© 2026 Pari Mittal. All investigations reserved.
+
+"Every case has a solution. Every mystery has an answer."
