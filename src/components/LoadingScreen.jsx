@@ -1,59 +1,101 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 
-const lines = [
-  'INITIATING SECURE PROTOCOL...',
-  'BYPASSING FIREWALL...',
-  'DECRYPTING AGENCY DOSSIER...',
-  'LOADING CLASSIFIED ASSETS...',
-  'ACCESS GRANTED.'
-]
+const sequenceLines = [
+    "Loading Investigator Profile...",
+    "Accessing Case Files...",
+    "Decrypting archives...",
+    "Investigator credentials verified.",
+    "Welcome, Visitor."
+];
 
-export default function LoadingScreen() {
-  const [progress, setProgress] = useState(0)
-  const [visibleLines, setVisibleLines] = useState([])
+export default function LoadingScreen({ onComplete }) {
+    const [completedLines, setCompletedLines] = useState([]);
+    const [currentText, setCurrentText] = useState('');
+    const [lineIndex, setLineIndex] = useState(0);
+    const [isExiting, setIsExiting] = useState(false);
 
-  useEffect(() => {
-    const progInterval = setInterval(() => {
-      setProgress(prev => (prev >= 100 ? 100 : prev + 1.2))
-    }, 30)
+    useEffect(() => {
+        if (lineIndex >= sequenceLines.length) {
+            const t = setTimeout(() => setIsExiting(true), 500);
+            return () => clearTimeout(t);
+        }
 
-    lines.forEach((line, i) => {
-      setTimeout(() => setVisibleLines(prev => [...prev, line]), i * 400)
-    })
+        const fullLine = sequenceLines[lineIndex];
+        let charIndex = 0;
+        setCurrentText('');
 
-    return () => clearInterval(progInterval)
-  }, [])
+        const typeInterval = setInterval(() => {
+            setCurrentText(fullLine.slice(0, charIndex + 1));
+            charIndex++;
 
-  return (
-    <div className="fixed inset-0 bg-[#0c0a09] z-[10000] flex flex-col items-center justify-center px-6">
-      {/* Sleek geometric loader instead of a lock */}
-      <div className="relative w-16 h-16 mb-12">
-        <div className="absolute inset-0 border-t-2 border-l-2 border-[#cca153] rounded-full animate-spin" />
-        <div className="absolute inset-2 border-b-2 border-r-2 border-[#8b0000] rounded-full animate-[spin_2s_linear_infinite_reverse]" />
-        <div className="absolute inset-0 flex items-center justify-center font-mono text-[10px] text-[#cca153]">
-          {Math.floor(progress)}%
-        </div>
-      </div>
+            if (charIndex >= fullLine.length) {
+                clearInterval(typeInterval);
+                setCompletedLines(prev => [...prev, fullLine]);
+                setTimeout(() => setLineIndex(prev => prev + 1), 250);
+            }
+        }, 30); // Fast typing rate
 
-      {/* Terminal text in gold/bronze */}
-      <div className="w-full max-w-md space-y-2 mb-8">
-        {visibleLines.map((line, i) => (
-          <div key={i} className="flex items-center gap-3 font-mono text-xs text-[#cca153]">
-            <span className="opacity-50">System //</span>
-            <span className={line === 'ACCESS GRANTED.' ? 'text-white' : 'opacity-80'}>
-              {line}
-            </span>
-          </div>
-        ))}
-      </div>
+        return () => clearInterval(typeInterval);
+    }, [lineIndex]);
 
-      {/* Thin, elegant progress bar */}
-      <div className="w-full max-w-xs h-px bg-[#cca153]/20 relative overflow-hidden">
-        <div 
-          className="absolute top-0 left-0 h-full bg-[#cca153] shadow-[0_0_10px_#cca153]"
-          style={{ width: `${progress}%`, transition: 'width 0.1s linear' }}
-        />
-      </div>
-    </div>
-  )
+    useEffect(() => {
+        if (isExiting) {
+            const t = setTimeout(() => {
+                if (onComplete) onComplete();
+            }, 800); // Wait for fade out transition
+            return () => clearTimeout(t);
+        }
+    }, [isExiting, onComplete]);
+
+    return (
+        <AnimatePresence>
+            {!isExiting && (
+                <motion.div
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.8, ease: "easeOut" }}
+                    style={{
+                        position: 'fixed',
+                        inset: 0,
+                        backgroundColor: '#050505',
+                        color: 'var(--color-gold, #c8a44d)',
+                        fontFamily: 'var(--font-mono, monospace)',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'center',
+                        zIndex: 9999,
+                        padding: '2rem',
+                        fontSize: 'clamp(0.85rem, 2vw, 1.1rem)'
+                    }}
+                >
+                    <div style={{ maxWidth: '600px', width: '100%', margin: '0 auto' }}>
+                        {completedLines.map((line, i) => (
+                            <div key={i} style={{ marginBottom: '0.75rem', opacity: 0.8 }}>
+                                <span style={{ color: '#c8a44d', opacity: 0.5, marginRight: '0.75rem' }}>&gt;</span>
+                                {line}
+                            </div>
+                        ))}
+                        {lineIndex < sequenceLines.length && (
+                            <div style={{ marginBottom: '0.75rem' }}>
+                                <span style={{ color: '#c8a44d', opacity: 0.5, marginRight: '0.75rem' }}>&gt;</span>
+                                {currentText}
+                                <motion.span
+                                    animate={{ opacity: [1, 0] }}
+                                    transition={{ repeat: Infinity, duration: 0.7, ease: "linear" }}
+                                    style={{
+                                        display: 'inline-block',
+                                        width: '0.6em',
+                                        height: '1.2em',
+                                        backgroundColor: 'var(--color-gold, #c8a44d)',
+                                        verticalAlign: 'middle',
+                                        marginLeft: '6px'
+                                    }}
+                                />
+                            </div>
+                        )}
+                    </div>
+                </motion.div>
+            )}
+        </AnimatePresence>
+    );
 }
