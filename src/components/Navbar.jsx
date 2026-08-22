@@ -1,20 +1,13 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-// Mapped to YOUR sections:
-// Landing.jsx            → #home
-// SuspectProfile.jsx     → #about
-// InvestigationBoard.jsx → #projects
-// EvidenceLocker.jsx     → #skills
-// InvestigationLog.jsx   → #experience
-// InformantReports.jsx   → #missions
-// SecureChannel.jsx      → #contact
 const links = [
     { href: '#about',      label: 'Dossier' },
     { href: '#projects',   label: 'Case Files' },
     { href: '#skills',     label: 'Toolkit' },
-    { href: '#experience', label: 'Training' },
-    { href: '#missions',   label: 'Missions' },
+    { href: '#experience', label: 'Missions' },
+    { href: '#education',  label: 'Training' },
+    { href: '#missions',   label: 'Field' },
     { href: '#contact',    label: 'Dispatch' },
 ];
 
@@ -106,7 +99,6 @@ export default function Navbar() {
                             fontWeight: 700,
                         }}
                     >
-                        {/* Swap for <img src="/logo-main.png" ... /> when you add a logo */}
                         PM
                     </div>
                 </a>
@@ -117,8 +109,8 @@ export default function Navbar() {
                     style={{
                         display: 'flex',
                         alignItems: 'center',
-                        gap: '4px',
-                        padding: '0 12px',
+                        gap: '2px',
+                        padding: '0 10px',
                         position: 'relative',
                     }}
                 >
@@ -129,15 +121,16 @@ export default function Navbar() {
                             className="navbar-link"
                             style={{
                                 fontFamily: 'var(--font-heading, serif)',
-                                fontSize: '0.85rem',
-                                letterSpacing: '0.05em',
+                                fontSize: '0.8rem',
+                                letterSpacing: '0.04em',
                                 color: 'rgba(232,224,208,0.7)',
-                                padding: '10px 14px',
+                                padding: '10px 12px',
                                 borderRadius: '20px',
                                 textDecoration: 'none',
                                 display: 'flex',
                                 alignItems: 'center',
                                 transition: 'all 0.3s',
+                                whiteSpace: 'nowrap',
                             }}
                             onMouseEnter={(e) => {
                                 e.currentTarget.style.color = '#e8dcc4';
@@ -154,9 +147,9 @@ export default function Navbar() {
                             <span
                                 style={{
                                     border: '1px solid rgba(200,164,77,0.35)',
-                                    marginLeft: '8px',
+                                    marginLeft: '6px',
                                     padding: '1px 5px',
-                                    fontSize: '0.55rem',
+                                    fontSize: '0.5rem',
                                     borderRadius: '3px',
                                     opacity: 0.5,
                                     fontFamily: 'var(--font-mono, monospace)',
@@ -279,10 +272,10 @@ export default function Navbar() {
             </AnimatePresence>
 
             <style>{`
-                @media (min-width: 768px) {
+                @media (min-width: 900px) {
                     .show-mobile { display: none !important; }
                 }
-                @media (max-width: 767px) {
+                @media (max-width: 899px) {
                     .hidden-mobile { display: none !important; }
                     .show-mobile { display: block !important; }
                 }
