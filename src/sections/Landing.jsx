@@ -1,34 +1,35 @@
-import { motion } from 'framer-motion'
-import { useState, useEffect } from 'react'
+import { motion } from 'framer-motion';
+import { useState, useEffect } from 'react';
+import NoiseOverlay from '../components/NoiseOverlay';
 
 const quotes = [
-  "Deduce precisely.",
-  "Code flawlessly.",
-  "Deploy intelligently.",
-]
+  'Deduce precisely.',
+  'Code flawlessly.',
+  'Deploy intelligently.',
+];
 
-export default function Hero() {
-  const [qi, setQi] = useState(0)
-  const [text, setText] = useState('')
+export default function Landing() {
+  const [qi, setQi] = useState(0);
+  const [text, setText] = useState('');
 
   useEffect(() => {
-    const q = quotes[qi]
-    let i = 0
-    setText('')
+    const q = quotes[qi];
+    let i = 0;
+    setText('');
     const iv = setInterval(() => {
-      setText(q.slice(0, i + 1))
-      i++
+      setText(q.slice(0, i + 1));
+      i++;
       if (i >= q.length) {
-        clearInterval(iv)
-        setTimeout(() => setQi((qi + 1) % quotes.length), 2200)
+        clearInterval(iv);
+        setTimeout(() => setQi((qi + 1) % quotes.length), 2200);
       }
-    }, 55)
-    return () => clearInterval(iv)
-  }, [qi])
+    }, 55);
+    return () => clearInterval(iv);
+  }, [qi]);
 
   const scrollDown = () => {
-    document.getElementById('suspect')?.scrollIntoView({ behavior: 'smooth' })
-  }
+    document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });
+  };
 
   return (
     <section
@@ -44,18 +45,32 @@ export default function Hero() {
         background: '#0c0a09',
       }}
     >
-      {/* Subtle vignette */}
+      {/* Corkboard + red strings — stronger opacity */}
       <div
         style={{
           position: 'absolute',
           inset: 0,
+          zIndex: 0,
+          opacity: 0.85,
+          pointerEvents: 'none',
+        }}
+      >
+        <NoiseOverlay />
+      </div>
+
+      {/* Light vignette only — don't crush the board */}
+      <div
+        style={{
+          position: 'absolute',
+          inset: 0,
+          zIndex: 1,
           background:
-            'radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.6) 100%)',
+            'radial-gradient(ellipse at center, transparent 45%, rgba(0,0,0,0.4) 100%)',
           pointerEvents: 'none',
         }}
       />
 
-      {/* Detective Identity Card */}
+      {/* Hero card */}
       <motion.div
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
@@ -68,14 +83,14 @@ export default function Hero() {
           width: '100%',
         }}
       >
-        {/* Radar scanner behind the text */}
+        {/* Single radar ring + sweep (no inner circle) */}
         <div
           style={{
             position: 'absolute',
             left: '50%',
             top: '50%',
             transform: 'translate(-50%, -50%)',
-            zIndex: -1,
+            zIndex: 0,
             pointerEvents: 'none',
             width: 'clamp(300px, 60vw, 600px)',
             aspectRatio: '1/1',
@@ -86,11 +101,12 @@ export default function Hero() {
               width: '100%',
               height: '100%',
               borderRadius: '50%',
-              border: '1px solid rgba(200, 164, 77, 0.15)',
+              border: '1px solid rgba(200, 164, 77, 0.22)',
               position: 'relative',
-              boxShadow: '0 0 40px rgba(200, 164, 77, 0.05) inset',
+              boxShadow: '0 0 40px rgba(200, 164, 77, 0.06) inset',
             }}
           >
+            {/* Sweep arm only */}
             <motion.div
               animate={{ rotate: 360 }}
               transition={{ repeat: Infinity, duration: 8, ease: 'linear' }}
@@ -99,10 +115,25 @@ export default function Hero() {
                 top: '50%',
                 left: '50%',
                 width: '50%',
-                height: '1px',
+                height: '2px',
                 background:
-                  'linear-gradient(90deg, transparent, rgba(200, 164, 77, 0.4))',
+                  'linear-gradient(90deg, transparent, rgba(200, 164, 77, 0.55))',
                 transformOrigin: 'left center',
+                boxShadow: '0 0 12px rgba(200, 164, 77, 0.35)',
+              }}
+            />
+            {/* Center dot */}
+            <div
+              style={{
+                position: 'absolute',
+                left: '50%',
+                top: '50%',
+                width: 6,
+                height: 6,
+                borderRadius: '50%',
+                background: 'rgba(200, 164, 77, 0.75)',
+                transform: 'translate(-50%, -50%)',
+                boxShadow: '0 0 10px rgba(200, 164, 77, 0.6)',
               }}
             />
           </div>
@@ -113,12 +144,12 @@ export default function Hero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.3 }}
-          style={{ marginBottom: '2.5rem' }}
+          style={{ marginBottom: '2.5rem', position: 'relative', zIndex: 2 }}
         >
           <span
             style={{
               display: 'inline-block',
-              fontFamily: '"Special Elite", monospace',
+              fontFamily: 'var(--font-mono, "Special Elite", monospace)',
               fontSize: '0.7rem',
               letterSpacing: '0.28em',
               textTransform: 'uppercase',
@@ -126,7 +157,7 @@ export default function Hero() {
               border: '1px solid rgba(204,161,83,0.3)',
               borderRadius: '9999px',
               padding: '0.4rem 1.1rem',
-              background: 'rgba(0,0,0,0.25)',
+              background: 'rgba(0,0,0,0.4)',
               backdropFilter: 'blur(4px)',
             }}
           >
@@ -134,16 +165,18 @@ export default function Hero() {
           </span>
         </motion.div>
 
-        {/* Name — Pari Mittal */}
+        {/* Name */}
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5, duration: 0.6 }}
           style={{
-            fontFamily: '"Playfair Display", serif',
+            fontFamily: 'var(--font-heading, "Playfair Display", serif)',
             fontWeight: 700,
             lineHeight: 0.95,
             marginBottom: '2.5rem',
+            position: 'relative',
+            zIndex: 2,
           }}
         >
           <span
@@ -178,6 +211,8 @@ export default function Hero() {
             background: '#cca153',
             margin: '0 auto 2rem',
             opacity: 0.8,
+            position: 'relative',
+            zIndex: 2,
           }}
         />
 
@@ -187,29 +222,33 @@ export default function Hero() {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.8 }}
           style={{
-            fontFamily: '"Special Elite", monospace',
+            fontFamily: 'var(--font-mono, "Special Elite", monospace)',
             fontSize: '0.75rem',
             letterSpacing: '0.22em',
             textTransform: 'uppercase',
             color: 'rgba(204,161,83,0.7)',
             marginBottom: '1.75rem',
+            position: 'relative',
+            zIndex: 2,
           }}
         >
           Full Stack Developer — AI/ML Engineer
         </motion.p>
 
-        {/* Typewriter quote */}
+        {/* Typewriter */}
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1 }}
           style={{
-            fontFamily: '"Playfair Display", serif',
+            fontFamily: 'var(--font-heading, "Playfair Display", serif)',
             fontSize: '1.1rem',
             color: 'rgba(232,224,208,0.75)',
             fontStyle: 'italic',
             height: '28px',
             marginBottom: '2.5rem',
+            position: 'relative',
+            zIndex: 2,
           }}
         >
           "{text}
@@ -227,7 +266,7 @@ export default function Hero() {
           "
         </motion.p>
 
-        {/* 3 Investigation buttons */}
+        {/* Buttons */}
         <motion.div
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
@@ -238,10 +277,12 @@ export default function Hero() {
             justifyContent: 'center',
             gap: '14px',
             marginBottom: '2.5rem',
+            position: 'relative',
+            zIndex: 2,
           }}
         >
           <motion.a
-            href="#suspect"
+            href="#projects"
             whileHover={{ y: -3 }}
             whileTap={{ scale: 0.97 }}
             style={btnGoldStyle}
@@ -250,7 +291,7 @@ export default function Hero() {
             Case Files
           </motion.a>
           <motion.a
-            href="#toolkit"
+            href="#skills"
             whileHover={{ y: -3 }}
             whileTap={{ scale: 0.97 }}
             style={btnOutlineStyle}
@@ -259,7 +300,7 @@ export default function Hero() {
             Evidence Toolkit
           </motion.a>
           <motion.a
-            href="#missions"
+            href="#experience"
             whileHover={{ y: -3 }}
             whileTap={{ scale: 0.97 }}
             style={btnOutlineStyle}
@@ -275,29 +316,33 @@ export default function Hero() {
           animate={{ opacity: 1 }}
           transition={{ delay: 1.5 }}
           style={{
-            fontFamily: '"Special Elite", monospace',
+            fontFamily: 'var(--font-mono, "Special Elite", monospace)',
             fontSize: '0.6rem',
             letterSpacing: '0.2em',
             textTransform: 'uppercase',
             color: 'rgba(232,224,208,0.3)',
             marginTop: '2.5rem',
+            position: 'relative',
+            zIndex: 2,
           }}
         >
           📍 Noida, Uttar Pradesh — Check the logs.
         </motion.p>
 
-        {/* Curiosity Hook Line */}
+        {/* Hook */}
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.6 }}
           style={{
-            fontFamily: '"Playfair Display", serif',
+            fontFamily: 'var(--font-heading, "Playfair Display", serif)',
             fontSize: '0.9rem',
             color: 'rgba(232,224,208,0.5)',
             fontStyle: 'italic',
             marginTop: '2.5rem',
             marginBottom: '1.5rem',
+            position: 'relative',
+            zIndex: 2,
           }}
         >
           "Every bug is a mystery. Every interface is a puzzle."
@@ -322,7 +367,7 @@ export default function Hero() {
           animate={{ y: [0, 6, 0] }}
           transition={{ duration: 2.5, repeat: Infinity }}
           style={{
-            fontFamily: '"Special Elite", monospace',
+            fontFamily: 'var(--font-mono, "Special Elite", monospace)',
             fontSize: '0.65rem',
             color: 'rgba(232,224,208,0.45)',
             letterSpacing: '0.2em',
@@ -341,14 +386,13 @@ export default function Hero() {
         }
       `}</style>
     </section>
-  )
+  );
 }
 
-/* ===== Button styles ===== */
 const btnBase = {
   display: 'inline-flex',
   alignItems: 'center',
-  fontFamily: '"Special Elite", monospace',
+  fontFamily: 'var(--font-mono, "Special Elite", monospace)',
   fontSize: '0.7rem',
   letterSpacing: '0.16em',
   textTransform: 'uppercase',
@@ -357,18 +401,18 @@ const btnBase = {
   textDecoration: 'none',
   cursor: 'pointer',
   transition: 'all 0.2s ease',
-}
+};
 
 const btnGoldStyle = {
   ...btnBase,
   background: '#cca153',
   color: '#1a140c',
   border: '1px solid #cca153',
-}
+};
 
 const btnOutlineStyle = {
   ...btnBase,
   background: 'rgba(0,0,0,0.25)',
   color: '#e6d5aa',
   border: '1px solid rgba(204,161,83,0.35)',
-}
+};
