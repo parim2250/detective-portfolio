@@ -1,159 +1,168 @@
-# 🔍 Pari Mittal — Detective Portfolio
+# Pari Mittal — Detective Portfolio
 
-A cinematic, narrative-driven developer portfolio built on a **detective investigation** theme.  
+A cinematic, narrative-driven developer portfolio built on a detective investigation theme.  
 Every section is a case file. Every skill is evidence. Every project is a solved mystery.
 
-**Subject:** Pari Mittal · Full Stack Developer & AI/ML Engineer  
-**Base:** Noida, Uttar Pradesh · **Classification:** Level 5 — Active
+**Subject:** Pari Mittal  
+**Role:** Full Stack Developer and AI/ML Engineer  
+**Base:** Noida, Uttar Pradesh  
+**Classification:** Level 5 — Active
 
-[![React](https://img.shields.io/badge/React-18-61DAFB?logo=react&logoColor=black)](https://react.dev)
-[![Vite](https://img.shields.io/badge/Vite-6-646CFF?logo=vite&logoColor=white)](https://vitejs.dev)
-[![Framer Motion](https://img.shields.io/badge/Framer%20Motion-11-0055FF?logo=framer&logoColor=white)](https://www.framer.com/motion/)
-[![Tailwind](https://img.shields.io/badge/Tailwind-v4-38BDF8?logo=tailwindcss&logoColor=white)](https://tailwindcss.com)
-
-🌐 **Live Demo:** *(add your Vercel URL)*  
-📂 **Repository:** [github.com/parim2250/portfolio](https://github.com/parim2250/portfolio)
+**Live Demo:** add-your-vercel-url-here  
+**Repository:** https://github.com/parim2250/portfolio
 
 ---
 
-## 🎬 Concept
+## Concept
 
-This is not a traditional skills page — it's a **narrative investigation system**:
+This is not a traditional skills page. It is a narrative investigation system.
 
-| Layer | Theme | Your Section |
-|--------|--------|----------------|
-| 🕵️ Identity | Detective dossier | `Landing` · Hero |
-| 🗂️ Case Files | Solved mysteries | `InvestigationBoard` · Projects |
-| 🔬 Forensic Lab | Constellation of tools | `EvidenceLocker` · Skills |
-| 📜 Timeline | Investigation history | `InvestigationLog` · Experience |
-| 🎓 Training | Academic background | `TrainingRecords` · Education |
-| 🌍 Field Ops | Events & community | `InformantReports` · Missions |
-| 📡 Dispatch | Contact channel | `SecureChannel` · Contact |
+| Layer | Theme | Section |
+| --- | --- | --- |
+| Identity | Detective dossier | Landing / Hero |
+| Case Files | Solved mysteries | Investigation Board / Projects |
+| Forensic Lab | Constellation of tools | Evidence Locker / Skills |
+| Timeline | Investigation history | Investigation Log / Experience |
+| Training | Academic background | Training Records / Education |
+| Field Ops | Events and community | Informant Reports / Missions |
+| Dispatch | Contact channel | Secure Channel / Contact |
 
-> *"Every bug is a mystery. Every interface is a puzzle."*
-
----
-
-## ✨ Features
-
-- **Cinematic Intro Sequence** — terminal boot text, once per session (`LoadingScreen`)
-- **Smooth Scroll** — Lenis-powered buttery navigation
-- **Evidence Constellation** — floating tech nodes, hover tooltips, skill detail modal, scanner ring
-- **Case File Cards** — parchment project cards with tilt, status stamps, tech tags, live/source links
-- **Investigation Log** — animated experience / mission timeline
-- **Training Records** — academic progression with completion bars
-- **Field Investigations** — mission photo / event board
-- **Mission Tracker HUD** — fixed bottom-left scroll progress + files reviewed (`InvestigationStatus`)
-- **Ambient Audio System** — optional theme + SFX dispatch toggle (`useAudio`)
-- **Detective Hero Atmosphere** — corkboard, red string, dust particles + radar sweep (`NoiseOverlay`)
-- **Secure Dispatch** — contact cards + confidential report form
-- **Full Mobile Responsive** — collapsible nav, reduced motion layers on small screens
+> Every bug is a mystery. Every interface is a puzzle.
 
 ---
 
-## 🛠️ Tech Stack
+## Features
+
+- Cinematic intro sequence (terminal boot, once per session)
+- Smooth scroll with Lenis
+- Evidence constellation skills map with hover panels
+- Case file project cards with status stamps and tech tags
+- Investigation log experience timeline
+- Training records education section
+- Field investigations event board
+- Mission tracker HUD for scroll progress
+- Optional ambient audio dispatch toggle
+- Detective hero atmosphere (corkboard, red string, radar)
+- Secure dispatch contact form and social links
+- Fully responsive layout
+
+---
+
+## Tech Stack
 
 | Category | Technology |
-|----------|------------|
+| --- | --- |
 | Framework | React 18 |
-| Build Tool | Vite |
+| Build tool | Vite |
 | Animations | Framer Motion |
-| Smooth Scroll | Lenis |
-| Styling | Tailwind CSS v4 + CSS custom properties |
-| Icons | Font Awesome 6 (CDN) |
-| Fonts | Playfair Display · Special Elite · Inter · Courier Prime |
-| Deployment | Vercel *(recommended)* |
+| Smooth scroll | Lenis |
+| Styling | Tailwind CSS v4 and CSS custom properties |
+| Icons | Font Awesome 6 |
+| Fonts | Playfair Display, Special Elite, Inter, Courier Prime |
+| Deployment | Vercel |
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```text
 portfolio/
-├── public/                      # logo, resume, static mission assets
+├── public/
 ├── src/
-│   ├── App.jsx                  # Root layout, intro, lazy sections, audio, Lenis
-│   ├── index.css                # Design system tokens & global utilities
-│   ├── main.jsx                 # React entry
+│   ├── App.jsx
+│   ├── index.css
+│   ├── main.jsx
 │   ├── components/
-│   │   ├── Navbar.jsx           # Fixed pill nav + mobile menu
-│   │   ├── Footer.jsx           # Closing brief + social channels
-│   │   ├── LoadingScreen.jsx    # Session intro terminal
-│   │   ├── InvestigationStatus.jsx  # Scroll HUD / mission tracker
-│   │   ├── NoiseOverlay.jsx     # Corkboard + red string + dust
-│   │   ├── SmoothScroll.jsx     # Lenis wrapper
-│   │   ├── TwoToneHeading.jsx   # Gold/cream section titles
-│   │   ├── CustomCursor.jsx
-│   │   ├── DustParticles.jsx
-│   │   └── CaseFileModal.jsx
+│   │   ├── Navbar.jsx
+│   │   ├── Footer.jsx
+│   │   ├── LoadingScreen.jsx
+│   │   ├── InvestigationStatus.jsx
+│   │   ├── NoiseOverlay.jsx
+│   │   ├── SmoothScroll.jsx
+│   │   └── TwoToneHeading.jsx
 │   ├── sections/
-│   │   ├── Landing.jsx              # Hero identity + radar
-│   │   ├── SuspectProfile.jsx       # About / classified dossier
-│   │   ├── InvestigationBoard.jsx   # Projects / case files
-│   │   ├── EvidenceLocker.jsx       # Skills constellation
-│   │   ├── InvestigationLog.jsx     # Experience timeline
-│   │   ├── TrainingRecords.jsx      # Education
-│   │   ├── InformantReports.jsx     # Field investigations
-│   │   └── SecureChannel.jsx        # Contact / dispatch
+│   │   ├── Landing.jsx
+│   │   ├── SuspectProfile.jsx
+│   │   ├── InvestigationBoard.jsx
+│   │   ├── EvidenceLocker.jsx
+│   │   ├── InvestigationLog.jsx
+│   │   ├── TrainingRecords.jsx
+│   │   ├── InformantReports.jsx
+│   │   └── SecureChannel.jsx
 │   ├── hooks/
-│   │   ├── useAudio.jsx             # Ambient SFX + music provider
-│   │   └── useScrollReveal.js
+│   │   └── useAudio.jsx
 │   └── data/
 │       ├── projects.js
 │       ├── skills.js
-│       ├── timeline.js
-│       ├── testimonials.js
-│       └── fieldMissions.js
+│       └── timeline.js
 ├── index.html
 ├── package.json
 └── vite.config.js
-🚀 Quick Start
+Quick Start
+Clone the repository:
+
 Bash
 
-# Clone
 git clone https://github.com/parim2250/portfolio.git
 cd portfolio
+Install dependencies:
 
-# Install
+Bash
+
 npm install
+Start the development server:
 
-# Dev server
+Bash
+
 npm run dev
+Open the app at:
 
-# LAN / mobile testing
+text
+
+http://localhost:5173
+Start with network access for phone testing:
+
+Bash
+
 npm run dev -- --host
-Dev server defaults to http://localhost:5173
+Build and Deploy
+Create a production build:
 
-🏗️ Build & Deploy
 Bash
 
 npm run build
-npm run preview
-Output: dist/
+Preview the production build locally:
 
+Bash
+
+npm run preview
+Build output folder:
+
+text
+
+dist/
 Vercel settings
 Setting	Value
 Framework Preset	Vite
 Build Command	npm run build
 Output Directory	dist
 Install Command	npm install
-🎨 Design System
-Tokens live in src/index.css (@theme + :root):
+Connect the GitHub repo to Vercel and deploy. After deploy, put your live URL at the top of this README.
 
-CSS
+Design System
+Design tokens live in src/index.css.
 
---color-bg: #0a0c10;           /* Deep charcoal navy */
---color-bg-light: #12151c;
---color-bg-card: #161a22;
---color-gold: #c8a44d;         /* Aged gold accent */
---color-red: #b23a3a;          /* Evidence red */
---color-parchment: #f5f1e8;    /* Case file parchment */
---font-heading: 'Playfair Display';
---font-mono: 'Special Elite';
---font-body: 'Inter';
-🧭 Section IDs (Navigation Map)
-Nav Label	Anchor	Component
-—	#home	Landing
+Token	Value	Use
+Background	#0a0c10	Page base
+Gold	#c8a44d	Accents and CTAs
+Red	#b23a3a	Evidence / stamps
+Parchment	#f5f1e8	Case file cards
+Heading font	Playfair Display	Titles
+Mono font	Special Elite	Labels and HUD
+Body font	Inter	Body text
+Section Map
+Nav label	Anchor ID	Component
+Home	#home	Landing
 Dossier	#about	SuspectProfile
 Case Files	#projects	InvestigationBoard
 Toolkit	#skills	EvidenceLocker
@@ -161,33 +170,26 @@ Missions	#experience	InvestigationLog
 Training	#education	TrainingRecords
 Field	#missions	InformantReports
 Dispatch	#contact	SecureChannel
-🔧 Customize Your Case
-Update this	Edit here
-Projects	InvestigationBoard.jsx / data/projects.js
-Skills	EvidenceLocker.jsx / data/skills.js
-Experience	InvestigationLog.jsx / data/timeline.js
-Education	TrainingRecords.jsx
-Events / field work	InformantReports.jsx / data/fieldMissions.js
-Contact + socials	SecureChannel.jsx, Footer.jsx
-Hero copy	Landing.jsx
-Theme	index.css
+Customize
+What to change	File to edit
+Projects	src/sections/InvestigationBoard.jsx or src/data/projects.js
+Skills	src/sections/EvidenceLocker.jsx or src/data/skills.js
+Experience	src/sections/InvestigationLog.jsx or src/data/timeline.js
+Education	src/sections/TrainingRecords.jsx
+Field events	src/sections/InformantReports.jsx
+Contact links	src/sections/SecureChannel.jsx and src/components/Footer.jsx
+Hero text	src/sections/Landing.jsx
+Colors and fonts	src/index.css
 Resume	public/resume.pdf
-Logo / favicon	public/logo-main.png
-📡 Secure Channels
-Channel	Link
-Email	parim2250@gmail.com
-GitHub	github.com/parim2250
-LinkedIn	pari-mittal
-Instagram	@parimittal504
-Threads	@parimittal504
-📸 Preview
-(Optional — add a screenshot after deploy)
+Logo	public/logo-main.png
+Secure Channels
+Email: parim2250@gmail.com
+GitHub: https://github.com/parim2250
+LinkedIn: https://www.linkedin.com/in/pari-mittal-b56895318
+Instagram: https://www.instagram.com/parimittal504/
+Threads: https://www.threads.net/@parimittal504
+License
+Personal portfolio. All rights reserved.
+Copyright 2026 Pari Mittal. All investigations reserved.
 
-Markdown
-
-![Portfolio preview](./public/preview.png)
-📜 License
-Personal portfolio — all rights reserved.
-© 2026 Pari Mittal. All investigations reserved.
-
-"Every case has a solution. Every mystery has an answer."
+Every case has a solution. Every mystery has an answer.
